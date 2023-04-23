@@ -4,21 +4,18 @@ class hashSet:
     
     def insert(self,key):
         if key in self.set:
-            print('\nKey is available')
+            print('Key is available')
             return
         self.set[key] = True
-        self.print()
         
     def delete(self,key):
         if key in self.set:
             del self.set[key]
-            self.print()
             return             
         else:
              return -1
              
     def print(self):
-        print("")
         for key in self.set:
             print(key,end=" ")         
 if __name__ == "__main__":
