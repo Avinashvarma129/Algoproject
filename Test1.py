@@ -3,8 +3,6 @@ import time
 def Hashtable(filename):
     linecount = 0
     hsobj=hash.hashSet()
-    x=time.time()
-    print(x)
     with open(filename, 'r') as f:
         
         
@@ -12,16 +10,12 @@ def Hashtable(filename):
             z = line.strip().split()
             linecount += 1
             if z[0]=='1':
-                hsobj.insert(z[1],False)
+                hsobj.insert(z[1])
             else:
-                x=hsobj.delete(z[1],False)
+                x=hsobj.delete(z[1])
                 if x==-1:
                     print("delete object in Line {} not found in the tree.".format(linecount))
     hsobj.print()
-    y=time.time()
-    print(y)
-    z=y-x
-    print(z)
 def BSTree(filename):
     linecount = 0
     bsobj=bst.BST()
@@ -79,10 +73,10 @@ def RBTree(filename):
                 if x==-1:
                     print("delete object in Line {} not found in the tree.".format(linecount))
     rbobj.inorder_traversal(rbobj.root)
-input_string = input()
+input_string = input("Enter data structure and file name with tab separated space:\n")
+x=time.time()
 input_list = input_string.split('\t')
 choice=input_list[0]
-print (choice)
 if choice == '0':
     Hashtable(input_list[1])
 elif choice == '1':
@@ -93,3 +87,5 @@ elif choice == '3':
     Skiplist(input_list[1])
 elif choice == '4':
     RBTree(input_list[1])     
+y=time.time()
+print(y-x)
