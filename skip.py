@@ -22,7 +22,7 @@ class skipList:
     def insert(self,item):
         [cur,update] = self.search(item)
         if cur and cur.key == item:
-            print('Element found')
+            print('Element found!')
             return
         else:
              level = self.randomLevel()
@@ -33,8 +33,7 @@ class skipList:
              cur = Node(item,level)
              for i in range(level+1):
                  cur.forward[i] = update[i].forward[i]
-                 update[i].forward[i] = cur
-             self.display()       
+                 update[i].forward[i] = cur       
     
     def delete(self,item):
         [node,update] = self.search(item)
@@ -46,7 +45,6 @@ class skipList:
                 update[i].forward[i] = node.forward[i]
         while self.level > 0 and not self.head.forward[self.level]:
             self.level -= 1
-        self.display()
     
     def search(self,item):
         node = self.head
