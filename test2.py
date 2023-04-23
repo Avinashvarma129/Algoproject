@@ -63,6 +63,6 @@ elif choice == '1':
 elif choice == '2':
     SplayTree(input_list[1])
 elif choice == '3':
-    print("Skip list not attainable!")
+    print("Skip list not available!")
 elif choice == '4':
     RBTree(input_list[1])     
