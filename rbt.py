@@ -270,7 +270,7 @@ class RBTree():
         if node is not None and node.data is not None :
             if node.data !=0:
                 self.inorder_traversal(node.left)
-                print(node.data)
+                print(node.data,end=' ')
                 self.inorder_traversal(node.right)
 
 if __name__ == "__main__":
