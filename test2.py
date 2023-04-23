@@ -1,18 +1,4 @@
 import bst,hash,rbt,splay
-
-def Hashtable(filename):
-    linecount = 0
-    hsobj=hash.hashSet()
-    with open(filename, 'r') as f:
-        for line in f:
-            z = line.strip().split()
-            linecount += 1
-            if z[0]=='1':
-                hsobj.insert(z[1],True)
-            else:
-                x=hsobj.delete(z[1],True)
-                if x==-1:
-                    print("delete object in Line {} not found in the tree.".format(linecount))
 def BSTree(filename):
     linecount = 0
     bsobj=bst.BST()
@@ -47,17 +33,16 @@ def RBTree(filename):
             z = line.strip().split()
             linecount+=1
             if z[0]=='1':
-                rbobj.insertNode(z[1],True)
+                rbobj.insert(z[1],True)
             else:
-                x=rbobj.delete_node(z[1],True)
+                x=rbobj.delete(z[1],True)
                 if x==-1:
                     print("delete object in Line {} not found in the tree.".format(linecount))
-input_string = input()
+input_string = input("Enter data structure and file name with tab separated space:\n")
 input_list = input_string.split('\t')
 choice=input_list[0]
-print (choice)
 if choice == '0':
-    Hashtable(input_list[1])
+    print("Hash Table not available!")
 elif choice == '1':
     BSTree(input_list[1])
 elif choice == '2':

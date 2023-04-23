@@ -5,7 +5,7 @@ class Node():
         self.left = None                                 
         self.right = None                                
         self.color = 1                                 
-        self.height = 1
+        self.height = 0
 class RBTree():
     def __init__(self):
         self.NULL = Node ( 0 )
@@ -13,7 +13,8 @@ class RBTree():
         self.NULL.left = None
         self.NULL.right = None
         self.root = self.NULL
-    def insertNode(self, key,case):
+        self.height = 0
+    def insert(self, key,case):
         node = Node(key)
         node.parent = None
         node.data = key
@@ -28,7 +29,7 @@ class RBTree():
             if node.data < x.data :
                 x = x.left
             elif node.data==x.data:
-                print("element found!",self.height(self.root))
+                print("element found!")
                 return
             else :
                 x = x.right
@@ -40,21 +41,23 @@ class RBTree():
             y.left = node
         else :
             y.right = node
-
+        node.parent = y
+        node.height = 1
+        self.adjustHeight(node)
         if node.parent == None :                         
             node.color = 0
             if case==True:
-                print(node.data,self.height(self.root))
+                print(node.data,self.root.height)
             return
 
         if node.parent.parent == None :  
             if case==True:             
-                print(node.data,self.height(self.root))
+                print(node.data,self.root.height)
             return
 
         self.fix_Insert ( node )
         if case==True:                   
-            print(node.data,self.height(self.root))
+            print(node.data,self.root.height)
     def fix_Insert(self, k):
         while k.parent.color == 1:                       
             if k.parent == k.parent.parent.right:        
@@ -107,6 +110,7 @@ class RBTree():
             x.parent.right = y
         y.left = x
         x.parent = y
+        self.heightCheck(x)
     def right_rotate ( self , x ) :
         y = x.left                                       
         x.left = y.right                             
@@ -122,6 +126,7 @@ class RBTree():
             x.parent.left = y
         y.right = x
         x.parent = y 
+        self.heightCheck(x)
     def fix_Delete ( self , x ) :
         while x != self.root and x.color == 0 :           
             if x == x.parent.left :                       
@@ -172,23 +177,34 @@ class RBTree():
                     x = self.root
         x.color = 0
         
-    def height(self, node):
-        if node is None:
-            return -1
-        else:
-            left_height = self.height(node.left)
-            right_height = self.height(node.right)
-            return 1 + max(left_height, right_height)
+    def adjustHeight(self,node):
+        current = node.parent
+        if current == None:
+            self.heightSafe(self.root)
+        while current != None:
+            if current.left == None and current.right == None:
+                current.height = 1 
+            elif current.left == None:
+                current.height = current.right.height+1
+            elif current.right == None:
+                current.height = current.left.height+1 
+            else:                      
+                current.height = max(current.left.height,current.right.height)+1
+            current = current.parent
     
-    def __rb_transplant ( self , u , v ) :
+    def transplant ( self , u , v ) :
         if u.parent == None :
             self.root = v
         elif u == u.parent.left :
             u.parent.left = v
         else :
             u.parent.right = v
-        v.parent = u.parent
-    def delete_node ( self , data ,case) :
+        if v!=None:
+            v.parent = u.parent
+            self.adjustHeight(v)
+        else:
+            self.adjustHeight(u.parent) 
+    def delete ( self , data ,case) :
         node=self.root        
         z = self.NULL
         while node != self.NULL :                          
@@ -205,10 +221,10 @@ class RBTree():
         y_original_color = y.color                          
         if z.left == self.NULL :                            
             x = z.right                                     
-            self.__rb_transplant ( z , z.right )            
+            self.transplant ( z , z.right )            
         elif (z.right == self.NULL) :                       
             x = z.left                                      
-            self.__rb_transplant ( z , z.left )             
+            self.transplant ( z , z.left )             
         else :                                              
             y = self.minimum ( z.right )                    
             y_original_color = y.color                      
@@ -216,18 +232,40 @@ class RBTree():
             if y.parent == z :                              
                 x.parent = y                                
             else :
-                self.__rb_transplant ( y , y.right )
+                self.transplant ( y , y.right )
                 y.right = z.right
                 y.right.parent = y
 
-            self.__rb_transplant ( z , y )
+            self.transplant ( z , y )
             y.left = z.left
             y.left.parent = y
             y.color = z.color
+            self.adjustHeight(x)
         if y_original_color == 0 :                          
             self.fix_Delete ( x )
-        print(data,self.height(self.root))
-   
+        if(case==True):
+            print("Element Deleted:",data,"Height:",self.root.height)
+    def heightSafe(self,current):
+        if current.left == None and current.right == None:
+                current.height = 1 
+        elif current.left == None:
+                current.height = current.right.height+1
+        elif current.right == None:
+                current.height = current.left.height+1 
+        else:                      
+            current.height = max(current.left.height,current.right.height)+1 
+
+    def heightCheck(self,current):
+        while current!=None:
+            if current.left == None and current.right == None:
+                    current.height = 1 
+            elif current.left == None:
+                    current.height = current.right.height+1
+            elif current.right == None:
+                    current.height = current.left.height+1 
+            else:                      
+                current.height = max(current.left.height,current.right.height)+1 
+            current = current.parent
     def inorder_traversal(self, node):
         if node is not None and node.data is not None :
             if node.data !=0:
@@ -237,13 +275,14 @@ class RBTree():
 
 if __name__ == "__main__":
     tree = RBTree()
-    tree.insertNode(10,True)
-    tree.insertNode(20,True)
-    tree.insertNode(30,True)
-    tree.insertNode(5,True)
-    tree.insertNode(4,True)
-    tree.insertNode(2,True)
-    tree.insertNode(4,True)
-    tree.delete_node(2,True)
-    tree.delete_node(50,True)
+    tree.insert(10,True)
+    tree.insert(20,True)
+    tree.insert(30,True)
+    tree.insert(5,True)
+    tree.insert(4,True)
+    tree.insert(2,True)
+    tree.insert(4,True)
+    tree.delete(2,True)
+    tree.delete(20,True)
+    tree.delete(50,True)
     tree.inorder_traversal(tree.root)

@@ -179,3 +179,4 @@ if __name__=="__main__" :
     tree.delete(10,True)             
     tree.delete(16,True)
     tree.delete(17,True)
+    tree.inOrderTraversal(tree.root)

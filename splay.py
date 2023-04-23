@@ -66,15 +66,15 @@ class splayTree():
                 
                 
                         
-    def insert(self,key):
+    def insert(self,key,case):
         node = Node(key)
         current = self.search(node)
         if current == None:
             self.root = node
         elif current.key == node.key:
-               self.splay(node)
-               print()  
-               return                     
+            print("element found!")
+            self.splay(node)  
+            return                     
         elif node.key<current.key:
             current.left = node
         else:
@@ -83,9 +83,8 @@ class splayTree():
         node.height = 1
         self.adjustHeight(node)
         self.splay(node)
-        print("Height",self.root.height)            
-        self.inOrderTraversal(self.root)
-        print()       
+        if(case==True):
+            print("Element:",node.key,"Height:",self.root.height)                   
 
     def search(self,node):
         root = self.root
@@ -126,7 +125,7 @@ class splayTree():
         print(node.key,end=' ')
         self.inOrderTraversal(node.right)
         
-    def delete(self,x):
+    def delete(self,x,case):
         x = Node(x)
         root = self.root
         node = None
@@ -162,12 +161,10 @@ class splayTree():
             self.adjustHeight(successor)
             self.splay(successor.parent)
             root = self.root
-        print("Height is",self.root.height)    
-        self.inOrderTraversal(self.root)    
-        print()    
+        if(case==True):
+            print("Element Deleted:",node.key,"Height:",self.root.height)
     
-    
-    
+
     def transplant(self,u,v):
         if u.parent == None:
             self.root = v
@@ -210,11 +207,11 @@ class splayTree():
             current = current.parent
 if __name__ == "__main__":        
     tree = splayTree()
-    tree.insert(15)             
-    tree.insert(10)             
-    tree.insert(17)  
-    tree.insert(7)             
-    tree.insert(13)             
-    tree.insert(16)
-    tree.delete(13)             
+    tree.insert(15,True)             
+    tree.insert(10,True)             
+    tree.insert(17,True)  
+    tree.insert(7,True)             
+    tree.insert(13,True)             
+    tree.insert(16,True)
+    tree.delete(13,True)             
     tree.inOrderTraversal(tree.root)

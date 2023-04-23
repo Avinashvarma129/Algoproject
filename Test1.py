@@ -4,8 +4,6 @@ def Hashtable(filename):
     linecount = 0
     hsobj=hash.hashSet()
     with open(filename, 'r') as f:
-        
-        
         for line in f:
             z = line.strip().split()
             linecount += 1
@@ -67,9 +65,9 @@ def RBTree(filename):
             z = line.strip().split()
             linecount+=1
             if z[0]=='1':
-                rbobj.insertNode(z[1],False)
+                rbobj.insert(z[1],False)
             else:
-                x=rbobj.delete_node(z[1],False)
+                x=rbobj.delete(z[1],False)
                 if x==-1:
                     print("delete object in Line {} not found in the tree.".format(linecount))
     rbobj.inorder_traversal(rbobj.root)
