@@ -36,7 +36,7 @@ def BSTree(filename):
                 x=bsobj.delete(z[1],False)
                 if x==-1:
                     print("delete object in Line {} not found in the tree.".format(linecount))
-    bsobj.inorder_traversal(bsobj.root)
+    bsobj.inOrderTraversal(bsobj.root)
 def SplayTree(filename):
     linecount = 0
     splayobj=splay.splayTree()

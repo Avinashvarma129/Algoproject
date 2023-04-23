@@ -4,7 +4,7 @@ class Node():
         self.parent = None                               
         self.left = None                                 
         self.right = None                                
-        self.color = 1                                   
+        self.color = 1                                 
         self.height = 1
 class RBTree():
     def __init__(self):
