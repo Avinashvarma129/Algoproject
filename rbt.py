@@ -47,17 +47,17 @@ class RBTree():
         if node.parent == None :                         
             node.color = 0
             if case==True:
-                print(node.data,self.root.height)
+                print("Element:",node.data,"Height",self.root.height)
             return
 
         if node.parent.parent == None :  
             if case==True:             
-                print(node.data,self.root.height)
+                print("Element:",node.data,"Height",self.root.height)
             return
 
         self.fix_Insert ( node )
         if case==True:                   
-            print(node.data,self.root.height)
+            print("Element:",node.data,"Height",self.root.height)
     def fix_Insert(self, k):
         while k.parent.color == 1:                       
             if k.parent == k.parent.parent.right:        
@@ -268,10 +268,9 @@ class RBTree():
             current = current.parent
     def inorder_traversal(self, node):
         if node is not None and node.data is not None :
-            if node.data !=0:
-                self.inorder_traversal(node.left)
-                print(node.data,end=' ')
-                self.inorder_traversal(node.right)
+            self.inorder_traversal(node.left)
+            print(node.data,end=' ')
+            self.inorder_traversal(node.right)
 
 if __name__ == "__main__":
     tree = RBTree()
