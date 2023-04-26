@@ -8,7 +8,7 @@ class Node():
         self.height = 0
 class RBTree():
     def __init__(self):
-        self.NULL = Node ( 0 )
+        self.NULL = Node ( None )
         self.NULL.color = 0
         self.NULL.left = None
         self.NULL.right = None
@@ -278,7 +278,7 @@ if __name__ == "__main__":
     tree.insert(20,True)
     tree.insert(30,True)
     tree.insert(5,True)
-    tree.insert(4,True)
+    tree.insert(0,True)
     tree.insert(2,True)
     tree.insert(4,True)
     tree.delete(2,True)
